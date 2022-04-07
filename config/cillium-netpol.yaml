@@ -1,0 +1,37 @@
+# there's a bug in here that blocks all traffic to the service
+# not sure exactly what, but at least it fails broken!
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "v1-http-rules"
+spec:
+  description: "=^.^= pin our version 1 video-service super duper intentionally <3"
+  endpointSelector:
+    matchLabels:
+      app: klustered
+  ingress:
+    - fromEndpoints:
+        - {}
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+          rules:
+            http:
+              - method: "GET"
+                path: "/"
+              #- method: "GET"
+              #  path: "/assets/video-v1.webm"
+
+---
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "allow-egress"
+spec:
+  description: "stuff should be able to talk to other things"
+  endpointSelector: {}
+  egress:
+    - toEndpoints:
+        - {}

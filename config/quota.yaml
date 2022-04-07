@@ -1,0 +1,31 @@
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: super-serious-production-uwu
+  namespace: default
+spec:
+  hard:
+    count/pods: "1"
+    count/replicasets.apps: "0" # who needs rolling updates anyway
+    count/events: "0"
+
+# just in case our mgmt pods get noisy...
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: super-serious-production-uwu
+  namespace: vcluster
+spec:
+  hard:
+    count/events: "0"
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: super-serious-production-uwu
+  namespace: local-path-storage
+spec:
+  hard:
+    count/events: "0"

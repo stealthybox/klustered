@@ -1,0 +1,19 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: never-gonna-give-you-up
+spec:
+  syncPeriod: 3s
+  cluster:
+    kubeconfigSecretRef:
+      name: creds
+      key: admin.conf
+  fetch:
+    - git:
+        url: https://github.com/stealthybox/klustered
+        ref: origin/main
+        subPath: config
+  template:
+    - ytt: {}
+  deploy:
+    - kapp: {}
